@@ -1,4 +1,4 @@
-from locust import HttpLocust, TaskSet, task
+from locust import HttpUser,between, TaskSet, task
 #from requests.auth import HTTPBasicAuth
  
 
