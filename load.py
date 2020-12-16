@@ -8,9 +8,9 @@ class QuickstartUser(HttpUser):
 
     wait_time = between(1,2)
 
-    def on_start(self):
-        self.token = self.login()
-        print(self.token)
+    #def on_start(self):
+    #    self.token = self.login()
+    #    print(self.token)
         
     def login(self):
         json_data = {
@@ -23,10 +23,16 @@ class QuickstartUser(HttpUser):
 
 
     @task
-    def profile_page(self):
-        self.client.get(url="/api/club/profile",headers={"authorization":self.token})
-
+    def server_check(self):
+        self.client.get(url="checkServer")
     
     @task
-    def all_featured_clubs(self):
-       self.client.get(url="/api/club/allFeatured",headers={"authorization":self.token})
+    def check_club_profile(self):
+        self.client.get(url="api/club/details?clubId=5fc8e1d5ca0c7edf35ac2e3c")
+
+    @task
+    def get_student_details(self):
+        self.client.get(url="api/student/details?studentId=5fc927fbf3c0b412006b7db4")
+
+    
+    
