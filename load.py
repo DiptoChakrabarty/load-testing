@@ -8,15 +8,12 @@ class QuickstartUser(HttpUser):
     wait_time = between(1,2)
 
     def on_start(self):
-        self.login()
-
-    def login(self):
-        self.client.post("/api/student/login",
-        {
-        "email": "rajat.main06@gmail.com",
-        "password": "dev"
-    })       
+        with self.client.post(url="/api/student/login",{{
+            "email": "rajat.main06@gmail.com",
+            "password": "dev"
+        }}) as response:
+            self.token = response.json["token"]
 
     @task
-    def get_clubs(self):
+    def next_page(self):
         self.client.get(url="/api/club/profile",headers={"authorization":self.token})
