@@ -1,3 +1,4 @@
+import json
 from locust import HttpUser,task,between
 
 class QuickstartUser(HttpUser):
@@ -8,12 +9,24 @@ class QuickstartUser(HttpUser):
     wait_time = between(1,2)
 
     def on_start(self):
-        with self.client.post(url="/api/student/login",{{
+        self.token = self.login()
+        print(self.token)
+        
+    def login(self):
+        json_data = {
             "email": "rajat.main06@gmail.com",
             "password": "dev"
-        }}) as response:
-            self.token = response.json["token"]
+        }
+        response = self.client.post(url="/api/student/login",data = json_data)
+
+        return json.loads(response._content)['token']
+
 
     @task
-    def next_page(self):
+    def profile_page(self):
         self.client.get(url="/api/club/profile",headers={"authorization":self.token})
+
+    
+    @task
+    def all_featured_clubs(self):
+       self.client.get(url="/api/club/allFeatured",headers={"authorization":self.token})
