@@ -9,7 +9,7 @@ geventhttpclient==1.4.4
 greenlet==0.4.16
 idna==2.10
 itsdangerous==1.1.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 locust==1.1.1
 MarkupSafe==1.1.1
 msgpack==1.0.0
